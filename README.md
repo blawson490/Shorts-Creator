@@ -2,6 +2,23 @@
 
 A sermon-first clipper for turning full church services into polished 60-second vertical clips.
 
+## Repository Layout
+
+```text
+.
+├── apps/
+│   ├── web/
+│   └── worker/
+├── packages/
+│   └── shared/
+├── supabase/
+│   ├── migrations/
+│   └── seed.sql
+├── docs/
+├── docker-compose.yml
+└── README.md
+```
+
 ## Product thesis
 
 Do **not** start by asking AI to understand raw video. Start with:
