@@ -19,6 +19,36 @@ A sermon-first clipper for turning full church services into polished 60-second 
 └── README.md
 ```
 
+## Database bootstrap
+
+Use the Supabase CLI to apply migrations and load development seed data.
+
+### 1) Start local Supabase services
+
+```bash
+supabase start
+```
+
+### 2) Apply migrations
+
+```bash
+supabase db push
+```
+
+### 3) Load seed data
+
+```bash
+supabase db seed --file supabase/seed.sql
+```
+
+### 4) Quick reset path (applies migrations + seed in one command)
+
+```bash
+supabase db reset
+```
+
+After this, your local database will contain one sample service row with linked transcript, clip, and render job records for quick schema validation.
+
 ## Product thesis
 
 Do **not** start by asking AI to understand raw video. Start with:
