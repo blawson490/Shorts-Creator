@@ -56,8 +56,9 @@ insert into public.clip_candidates (
   hook_score,
   standalone_score,
   emotional_score,
-  clarity_score,
+  theology_clarity_score,
   shareability_score,
+  clean_ending_score,
   overall_score,
   reason,
   status
@@ -74,6 +75,7 @@ values (
   86.0,
   89.0,
   84.0,
+  90.0,
   87.6,
   'Strong opening line and complete thought arc in under 60 seconds.',
   'approved'

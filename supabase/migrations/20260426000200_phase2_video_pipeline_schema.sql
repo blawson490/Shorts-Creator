@@ -42,16 +42,18 @@ create table if not exists public.clip_candidates (
   end_time numeric(10, 3) not null check (end_time > start_time),
   title text not null,
   summary text not null,
-  hook_score numeric(5, 2) not null,
-  standalone_score numeric(5, 2) not null,
-  emotional_score numeric(5, 2) not null,
-  clarity_score numeric(5, 2) not null,
-  shareability_score numeric(5, 2) not null,
-  overall_score numeric(5, 2) not null,
+  hook_score numeric(5, 2) not null check (hook_score >= 0 and hook_score <= 100),
+  standalone_score numeric(5, 2) not null check (standalone_score >= 0 and standalone_score <= 100),
+  emotional_score numeric(5, 2) not null check (emotional_score >= 0 and emotional_score <= 100),
+  theology_clarity_score numeric(5, 2) not null check (theology_clarity_score >= 0 and theology_clarity_score <= 100),
+  shareability_score numeric(5, 2) not null check (shareability_score >= 0 and shareability_score <= 100),
+  clean_ending_score numeric(5, 2) not null check (clean_ending_score >= 0 and clean_ending_score <= 100),
+  overall_score numeric(5, 2) not null check (overall_score >= 0 and overall_score <= 100),
   reason text not null,
   status text not null default 'suggested' check (
     status in ('suggested', 'approved', 'rejected', 'rendered')
-  )
+  ),
+  created_at timestamptz not null default now()
 );
 
 -- Rebuild render_jobs to align with clip_candidates-driven rendering.
@@ -60,7 +62,7 @@ drop table if exists public.render_jobs;
 create table public.render_jobs (
   id uuid primary key default gen_random_uuid(),
   clip_candidate_id uuid not null references public.clip_candidates(id) on delete cascade,
-  status text not null default 'queued',
+  status text not null default 'queued' check (status in ('queued', 'processing', 'completed', 'failed', 'canceled')),
   progress integer not null default 0 check (progress >= 0 and progress <= 100),
   output_file_key text,
   error_message text,
