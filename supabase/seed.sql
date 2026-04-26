@@ -36,11 +36,56 @@ values (
 )
 on conflict (id) do nothing;
 
-insert into public.render_jobs (id, clip_id, preset, status)
+insert into public.videos (id, title, status, original_file_key, duration_seconds)
 values (
-  '44444444-4444-4444-4444-444444444444',
-  '33333333-3333-3333-3333-333333333333',
-  'vertical_1080x1920',
-  'queued'
+  '55555555-5555-5555-5555-555555555555',
+  'Sunday Service Upload (Sample)',
+  'analyzed',
+  'uploads/services/2026-04-20-sunday-service.mp4',
+  5399.25
+)
+on conflict (id) do nothing;
+
+insert into public.clip_candidates (
+  id,
+  video_id,
+  start_time,
+  end_time,
+  title,
+  summary,
+  hook_score,
+  standalone_score,
+  emotional_score,
+  clarity_score,
+  shareability_score,
+  overall_score,
+  reason,
+  status
+)
+values (
+  '66666666-6666-6666-6666-666666666666',
+  '55555555-5555-5555-5555-555555555555',
+  2520.0,
+  2578.0,
+  'Faith Over Fear',
+  'A concise encouragement to trust God in uncertain seasons.',
+  88.0,
+  91.0,
+  86.0,
+  89.0,
+  84.0,
+  87.6,
+  'Strong opening line and complete thought arc in under 60 seconds.',
+  'approved'
+)
+on conflict (id) do nothing;
+
+insert into public.render_jobs (id, clip_candidate_id, status, progress, output_file_key)
+values (
+  '77777777-7777-7777-7777-777777777777',
+  '66666666-6666-6666-6666-666666666666',
+  'processing',
+  45,
+  null
 )
 on conflict (id) do nothing;
