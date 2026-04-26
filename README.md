@@ -19,6 +19,32 @@ A sermon-first clipper for turning full church services into polished 60-second 
 └── README.md
 ```
 
+## Database bootstrap
+
+Use the Supabase CLI to initialize a local database with migrations and seed data.
+
+### 1) Start local Supabase services
+
+```bash
+supabase start
+```
+
+### 2) Bootstrap local DB (migrations + seed)
+
+```bash
+supabase db reset
+```
+
+`supabase db reset` recreates your local database, reapplies all migrations from `supabase/migrations`, and then runs `supabase/seed.sql`.
+
+### 3) Optional: apply only new local migrations during iteration
+
+```bash
+supabase migration up
+```
+
+After this, your local database will contain one sample service row with linked transcript, clip, and render job records for quick schema validation.
+
 ## Product thesis
 
 Do **not** start by asking AI to understand raw video. Start with:
