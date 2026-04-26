@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  web:
+    image: alpine:3.20
+    command: ["sh", "-c", "echo 'web placeholder service' && sleep infinity"]
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+
+  worker:
+    image: python:3.12-slim
+    command: ["sh", "-c", "echo 'worker placeholder service' && sleep infinity"]
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
