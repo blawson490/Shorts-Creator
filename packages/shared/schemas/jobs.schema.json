@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shorts-creator.dev/schemas/jobs.schema.json",
+  "title": "MediaJob",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/IngestJob"
+    },
+    {
+      "$ref": "#/$defs/TranscribeJob"
+    },
+    {
+      "$ref": "#/$defs/ScoreJob"
+    },
+    {
+      "$ref": "#/$defs/RenderJob"
+    }
+  ],
+  "$defs": {
+    "Base": {
+      "type": "object",
+      "properties": {
+        "job_id": { "type": "string", "minLength": 1 },
+        "requested_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["job_id", "requested_at"]
+    },
+    "IngestJob": {
+      "allOf": [
+        { "$ref": "#/$defs/Base" },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "const": "ingest" },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "source_url": { "type": "string", "format": "uri" },
+                "asset_id": { "type": "string", "minLength": 1 }
+              },
+              "required": ["source_url", "asset_id"]
+            }
+          },
+          "required": ["kind", "payload"]
+        }
+      ]
+    },
+    "TranscribeJob": {
+      "allOf": [
+        { "$ref": "#/$defs/Base" },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "const": "transcribe" },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "asset_id": { "type": "string", "minLength": 1 },
+                "language": { "type": "string", "minLength": 2 }
+              },
+              "required": ["asset_id"]
+            }
+          },
+          "required": ["kind", "payload"]
+        }
+      ]
+    },
+    "ScoreJob": {
+      "allOf": [
+        { "$ref": "#/$defs/Base" },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "const": "score" },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "transcript_id": { "type": "string", "minLength": 1 },
+                "sermon_window": {
+                  "type": "object",
+                  "properties": {
+                    "start_seconds": { "type": "number", "minimum": 0 },
+                    "end_seconds": { "type": "number", "exclusiveMinimum": 0 }
+                  },
+                  "required": ["start_seconds", "end_seconds"]
+                }
+              },
+              "required": ["transcript_id"]
+            }
+          },
+          "required": ["kind", "payload"]
+        }
+      ]
+    },
+    "RenderJob": {
+      "allOf": [
+        { "$ref": "#/$defs/Base" },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "const": "render" },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "clip_id": { "type": "string", "minLength": 1 },
+                "caption_style": {
+                  "type": "string",
+                  "enum": ["bold_emphasis", "clean_minimal"]
+                }
+              },
+              "required": ["clip_id", "caption_style"]
+            }
+          },
+          "required": ["kind", "payload"]
+        }
+      ]
+    }
+  }
+}
