@@ -1,12 +1,14 @@
 # Worker App
 
-This folder contains the Python pipeline worker for media processing and AI-assisted clip generation.
+Python worker package with a Redis queue consumer entrypoint.
 
-## Purpose
-- Run background jobs for ingest, transcription, scoring, and rendering.
-- Execute deterministic media pipeline steps and task retries.
+## Run
+```bash
+pip install -e .
+shorts-worker
+```
 
-## Ownership boundary
-- Owns server-side job execution and media processing pipeline code.
-- Must not contain web UI components or browser-specific logic.
-- Uses shared contracts/types from `packages/shared` for job and data interoperability.
+## Environment variables
+- `REDIS_URL` (default: `redis://localhost:6379/0`)
+- `REDIS_QUEUE` (default: `jobs:media`)
+- `LOG_LEVEL` (default: `INFO`)
