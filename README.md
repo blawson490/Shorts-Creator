@@ -21,7 +21,7 @@ A sermon-first clipper for turning full church services into polished 60-second 
 
 ## Database bootstrap
 
-Use the Supabase CLI to apply migrations and load development seed data locally.
+Use the Supabase CLI to initialize a local database with migrations and seed data.
 
 ### 1) Start local Supabase services
 
@@ -29,19 +29,19 @@ Use the Supabase CLI to apply migrations and load development seed data locally.
 supabase start
 ```
 
-### 2) Apply local migrations only
-
-```bash
-supabase migration up
-```
-
-### 3) Seed local data from `supabase/seed.sql`
+### 2) Bootstrap local DB (migrations + seed)
 
 ```bash
 supabase db reset
 ```
 
-`supabase db reset` recreates your local database, reapplies all migrations, and then runs `supabase/seed.sql`.
+`supabase db reset` recreates your local database, reapplies all migrations from `supabase/migrations`, and then runs `supabase/seed.sql`.
+
+### 3) Optional: apply only new local migrations during iteration
+
+```bash
+supabase migration up
+```
 
 After this, your local database will contain one sample service row with linked transcript, clip, and render job records for quick schema validation.
 
